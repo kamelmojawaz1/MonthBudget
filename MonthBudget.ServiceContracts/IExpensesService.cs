@@ -4,7 +4,8 @@ namespace MonthBudget.ServiceContracts
 {
     public interface IExpensesService
     {
-        public Expense AddExpense(string title,string note,int categoryId,int accountId,DateTime transactionDate);
-        public bool RemoveExpense(int expenseId);
+        public Task<Expense> AddExpense(Expense expense);
+        public Task<bool> RemoveExpense(int expenseId);
+        public List<Expense> GetExpenses(int userId, DateTime? from = null, DateTime? to = null);
     }
 }
