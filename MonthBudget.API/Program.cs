@@ -20,6 +20,8 @@ builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ExpensesRepository>();
 builder.Services.AddScoped<IExpensesService, ExpensesService>();
+builder.Services.AddScoped<IncomeRepository>();
+builder.Services.AddScoped<IIncomeService, IncomeService>();
 builder.Services.AddDbContext<MonthBudgetDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("Local"));

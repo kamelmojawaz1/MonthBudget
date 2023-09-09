@@ -24,6 +24,7 @@ namespace MonthBudget.Data.Repositories
             if (expense == null) return false;
 
             expense.IsActive = false;
+            expense.UpdatedOn = DateTime.Now;/**this assumes db and server are in the same timezone**/
 
             var result = _dbContext.Expenses.Update(expense);
             await _dbContext.SaveChangesAsync();
