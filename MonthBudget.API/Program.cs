@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using MonthBudget.Data;
 using MonthBudget.Data.Repositories;
 using MonthBudget.ServiceContracts;
@@ -10,10 +11,15 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "MonthBudget API", Version = "v1" });
+});
 
 builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<ExpensesRepository>();
+builder.Services.AddScoped<IExpensesService, ExpensesService>();
 builder.Services.AddDbContext<MonthBudgetDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("Local"));
