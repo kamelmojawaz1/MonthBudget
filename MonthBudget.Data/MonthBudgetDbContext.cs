@@ -112,8 +112,9 @@ public partial class MonthBudgetDbContext : DbContext
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.AccountId).HasColumnName("accountId");
+            entity.Property(e => e.Amount).HasColumnName("amount");
             entity.Property(e => e.CreatedOn)
-                .HasDefaultValueSql("('getdate()')")
+                .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime")
                 .HasColumnName("createdOn");
             entity.Property(e => e.IsActive)
@@ -131,8 +132,8 @@ public partial class MonthBudgetDbContext : DbContext
                 .HasDefaultValueSql("('')")
                 .HasColumnName("source");
             entity.Property(e => e.TransactionDate)
-                .HasDefaultValueSql("('getdate()')")
-                .HasColumnType("date")
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
                 .HasColumnName("transactionDate");
             entity.Property(e => e.UpdatedOn)
                 .HasColumnType("datetime")
