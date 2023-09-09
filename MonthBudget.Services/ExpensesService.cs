@@ -37,7 +37,7 @@ namespace MonthBudget.Services
                 throw new ValidationException($"incorrect userid {userId}");
 
             return from == null || to == null ? _expensesRepository.GetAll(userId) :
-                                                _expensesRepository.GetAll(userId);
+                                                _expensesRepository.GetInRange(userId,from.Value,to.Value);
         }
 
         public async Task<bool> RemoveExpense(int expenseId)
