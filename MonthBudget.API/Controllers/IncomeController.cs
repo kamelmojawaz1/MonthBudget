@@ -43,7 +43,6 @@ namespace MonthBudget.API.Controllers
         {
             try
             {
-                _logger.LogError("AddIncome request from {userId}: incomeDto = {incomDto}: error message = {message}", incomeDto.UserId, incomeDto.ToString(), "test");
                 var createdIncome = await _incomeService.AddIncome(incomeDto.ConvertToIncome());
                 return CreatedAtAction(nameof(AddIncome), new { id = createdIncome.Id }, createdIncome);
             }
