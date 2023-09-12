@@ -41,5 +41,11 @@ namespace MonthBudget.Data.Repositories
             var incomes = _dbContext.RecurringIncomes.Where(e => e.UserId == userId && e.IsActive == true).ToList();
             return incomes ?? new List<RecurringIncome>();
         }
+
+        public List<RecurringIncome> GetInRange(int userId, DateTime from, DateTime to)
+        {
+            var expenses = _dbContext.RecurringIncomes.Where(e => e.UserId == userId && e.IsActive == true && e.StartDate >= from && e.EndDate <= to).ToList();
+            return expenses ?? new List<RecurringIncome>();
+        }
     }
 }
