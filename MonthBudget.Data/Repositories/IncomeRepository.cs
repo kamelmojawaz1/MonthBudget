@@ -1,4 +1,5 @@
 ﻿using MonthBudget.Data.Models;
+using System.Linq.Expressions;
 
 namespace MonthBudget.Data.Repositories
 {
@@ -28,6 +29,23 @@ namespace MonthBudget.Data.Repositories
 
             var result = _dbContext.Incomes.Update(income);
             await _dbContext.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> RemoveIncome(Expression<Func<Income, bool>> incomeFilter)
+        {
+            var incomes = _dbContext.Incomes.Where(incomeFilter).ToList();
+            if (incomes == null) return false;
+
+            foreach (var income in incomes)
+            {
+                income.IsActive = false;
+                income.UpdatedOn = DateTime.Now;/**this assumes db and server are in the same timezone**/
+
+                _dbContext.Incomes.Update(income);
+                await _dbContext.SaveChangesAsync();
+            }
+
             return true;
         }
 
