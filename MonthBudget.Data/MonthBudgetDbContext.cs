@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using MonthBudget.Data.Models;
 
 namespace MonthBudget.Data;
@@ -174,6 +172,7 @@ public partial class MonthBudgetDbContext : DbContext
                 .HasColumnType("datetime")
                 .HasColumnName("createdOn");
             entity.Property(e => e.EndDate)
+                .HasDefaultValueSql("('getdate()')")
                 .HasColumnType("datetime")
                 .HasColumnName("endDate");
             entity.Property(e => e.IsActive)
@@ -186,6 +185,7 @@ public partial class MonthBudgetDbContext : DbContext
                 .HasDefaultValueSql("('')")
                 .HasColumnName("note");
             entity.Property(e => e.StartDate)
+                .HasDefaultValueSql("('getdate()')")
                 .HasColumnType("datetime")
                 .HasColumnName("startDate");
             entity.Property(e => e.Title)
@@ -210,6 +210,7 @@ public partial class MonthBudgetDbContext : DbContext
                 .HasColumnType("datetime")
                 .HasColumnName("createdOn");
             entity.Property(e => e.EndDate)
+                .HasDefaultValueSql("('getdate()')")
                 .HasColumnType("datetime")
                 .HasColumnName("endDate");
             entity.Property(e => e.IsActive)
@@ -227,6 +228,7 @@ public partial class MonthBudgetDbContext : DbContext
                 .HasDefaultValueSql("('')")
                 .HasColumnName("source");
             entity.Property(e => e.StartDate)
+                .HasDefaultValueSql("('getdate()')")
                 .HasColumnType("datetime")
                 .HasColumnName("startDate");
             entity.Property(e => e.UserId).HasColumnName("userId");
