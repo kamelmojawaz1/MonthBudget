@@ -57,12 +57,13 @@ namespace MonthBudget.Services
         }
 
 
-        public (List<RecurringExpense>, List<Expense>) GetRecurringExpenses(int userId)
+        public (List<RecurringExpense>, List<Expense>) GetRecurringExpenses(int userId, DateTime? from = null, DateTime? to = null)
         {
             if (userId < 0)
                 throw new ValidationException($"incorrect userid {userId}");
 
-            var recurringExpenses = _recurringExpensesRepository.GetAll(userId);
+            var recurringExpenses = from == null || to == null ? _recurringExpensesRepository.GetAll(userId) :
+                                                                    _recurringExpensesRepository.GetInRange(userId, (DateTime)from, (DateTime)to);
             var monthlyExpenses = _expensesRepository.GetAll(userId).Where(i => i.RecurringId > 0 && i.IsActive == true).ToList();
 
             return (recurringExpenses, monthlyExpenses);
