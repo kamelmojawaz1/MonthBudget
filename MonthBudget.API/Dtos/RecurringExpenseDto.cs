@@ -32,12 +32,12 @@ namespace MonthBudget.API.Dtos
         public int AccountId { get; set; }
 
         [Required]
-        [DefaultValue("1/1/2023")]
+        [DefaultValue("2023-01-01")]
 
         public DateTime StartDate { get; set; }
 
         [Required]
-        [DefaultValue("1/1/2024")]
+        [DefaultValue("2024-01-01")]
         public DateTime EndDate { get; set; }
 
         [Required]
@@ -56,7 +56,8 @@ namespace MonthBudget.API.Dtos
                 AccountId = AccountId,
                 StartDate = StartDate,
                 EndDate = EndDate,
-                CategoryId = CategoryId
+                CategoryId = CategoryId,
+                CreatedOn = DateTime.Now
             };
         }
 
