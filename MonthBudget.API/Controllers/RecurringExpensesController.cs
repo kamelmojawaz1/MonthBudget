@@ -9,12 +9,12 @@ namespace MonthBudget.API.Controllers
     public class RecurringExpensesController : ControllerBase
     {
         private readonly ILogger<RecurringExpensesController> _logger;
-        private readonly IRecurringExpensesService _expensesService;
+        private readonly IRecurringExpensesService _service;
 
         public RecurringExpensesController(ILogger<RecurringExpensesController> logger, IRecurringExpensesService expensesService)
         {
             _logger = logger;
-            _expensesService = expensesService;
+            _service = expensesService;
         }
 
         /// <summary>
@@ -39,7 +39,9 @@ namespace MonthBudget.API.Controllers
             {
                 var fromDate = Convert.ToDateTime(from);
                 var toDate = Convert.ToDateTime(to);
-                return Ok(_expensesService.GetRecurringExpenses(userId, fromDate, toDate));
+                var result = _service.GetRecurringExpenses(userId, fromDate, toDate);
+
+                return Ok(new { recurring = result.Item1, expenses = result.Item2 });
             }
             catch (Exception e)
             {
@@ -76,9 +78,9 @@ namespace MonthBudget.API.Controllers
         {
             try
             {
-                var result = await _expensesService.AddRecurringExpense(recurringExpenseDto.ConvertToRecurringExpense());
+                var result = await _service.AddRecurringExpense(recurringExpenseDto.ConvertToRecurringExpense());
 
-                return CreatedAtAction(nameof(AddRecurringExpense), new { id = result.Item1.Id },result);
+                return CreatedAtAction(nameof(AddRecurringExpense), new { id = result.Item1.Id }, new {recurring = result.Item1 , expenses = result.Item2 });
             }
             catch (Exception e)
             {
@@ -106,7 +108,7 @@ namespace MonthBudget.API.Controllers
         {
             try
             {
-                var removed = await _expensesService.RemoveRecurringExpense(recurringExpenseId);
+                var removed = await _service.RemoveRecurringExpense(recurringExpenseId);
                 if (removed)
                 {
                     return Ok(true);
