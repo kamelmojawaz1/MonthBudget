@@ -32,6 +32,8 @@ public partial class Expense
     [DefaultValue(1)]
     public int AccountId { get; set; }
 
+    public int RecurringId { get; set; }
+
     [Required]
     [Range(1, double.MaxValue)]
     [DefaultValue(100.25)]

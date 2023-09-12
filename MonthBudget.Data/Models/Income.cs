@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace MonthBudget.Data.Models;
 
@@ -22,6 +21,8 @@ public partial class Income
     [Required]
     [Range(1, int.MaxValue)]
     public int AccountId { get; set; }
+
+    public int RecurringId { get; set; }
 
     [Required]
     [Range(1, double.MaxValue)]
