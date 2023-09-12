@@ -167,6 +167,7 @@ public partial class MonthBudgetDbContext : DbContext
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.AccountId).HasColumnName("accountId");
+            entity.Property(e => e.Amount).HasColumnName("amount");
             entity.Property(e => e.CategoryId).HasColumnName("categoryId");
             entity.Property(e => e.CreatedOn)
                 .HasDefaultValueSql("('getdate()')")
@@ -203,6 +204,7 @@ public partial class MonthBudgetDbContext : DbContext
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.AccountId).HasColumnName("accountId");
+            entity.Property(e => e.Amount).HasColumnName("amount");
             entity.Property(e => e.CreatedOn)
                 .HasDefaultValueSql("('getdate()')")
                 .HasColumnType("datetime")
