@@ -33,7 +33,7 @@ namespace MonthBudget.Services
             var monthlyExpenses = new List<Expense>();
             var from = recurringExpense.StartDate;
             var to = recurringExpense.EndDate;
-            while (from <= to)
+            while (from < to)
             {
                 var monthlyExpense = new Expense
                 {

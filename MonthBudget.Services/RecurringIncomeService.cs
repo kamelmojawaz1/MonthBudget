@@ -33,7 +33,7 @@ namespace MonthBudget.Services
             var monthlyIncomes = new List<Income>();
             var from = recurringIncome.StartDate;
             var to = recurringIncome.EndDate;
-            while (from <= to)
+            while (from < to)
             {
                 var monthlyIncome = new Income
                 {
