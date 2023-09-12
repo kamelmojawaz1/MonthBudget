@@ -22,6 +22,11 @@ builder.Services.AddScoped<ExpensesRepository>();
 builder.Services.AddScoped<IExpensesService, ExpensesService>();
 builder.Services.AddScoped<IncomeRepository>();
 builder.Services.AddScoped<IIncomeService, IncomeService>();
+builder.Services.AddScoped<RecurringExpensesRepository>();
+builder.Services.AddScoped<IRecurringExpensesService,RecurringExpensesService>();
+builder.Services.AddScoped<RecurringIncomeRepository>();
+builder.Services.AddScoped<IRecurringIncomeService,RecurringIncomeService>();
+
 builder.Services.AddDbContext<MonthBudgetDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("Local"));
