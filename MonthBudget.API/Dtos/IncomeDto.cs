@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using MonthBudget.Data.Models;
+using System.Text.Json;
 
 namespace MonthBudget.API.Dtos
 {
@@ -45,6 +46,11 @@ namespace MonthBudget.API.Dtos
                 AccountId = AccountId,
                 TransactionDate = TransactionDate
             };
+        }
+
+        public override string ToString()
+        {
+            return JsonSerializer.Serialize<IncomeDto>(this);
         }
     }
 }

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using MonthBudget.API.Dtos;
+using MonthBudget.Data.Models;
 using MonthBudget.ServiceContracts;
 
 namespace MonthBudget.API.Controllers
@@ -42,11 +43,13 @@ namespace MonthBudget.API.Controllers
         {
             try
             {
+                _logger.LogError("AddIncome request from {userId}: incomeDto = {incomDto}: error message = {message}", incomeDto.UserId, incomeDto.ToString(), "test");
                 var createdIncome = await _incomeService.AddIncome(incomeDto.ConvertToIncome());
                 return CreatedAtAction(nameof(AddIncome), new { id = createdIncome.Id }, createdIncome);
             }
             catch (Exception e)
             {
+                _logger.LogError("AddIncome request from {userId}: incomeDto = {incomDto}: error message = {message}", incomeDto.UserId,incomeDto.ToString(), e.Message);
                 return BadRequest(e.Message);
             }
         }
@@ -78,6 +81,7 @@ namespace MonthBudget.API.Controllers
             }
             catch (Exception e)
             {
+                _logger.LogError("GetIncome request from {userId}: userId = {userId} , from = {from} , to = {to}: error message = {message}", userId, userId, from, to, e.Message);
                 return BadRequest(e.Message);
             }
         }
@@ -112,6 +116,7 @@ namespace MonthBudget.API.Controllers
             }
             catch (Exception e)
             {
+                _logger.LogError("RemoveIncome request= {incomeId} error= {message}", incomeId, e.Message);
                 return BadRequest(e.Message);
             }
         }
