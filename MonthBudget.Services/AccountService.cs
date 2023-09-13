@@ -7,19 +7,19 @@ namespace MonthBudget.Services
 {
     public class AccountService : IAccountService
     {
-        private readonly ExpensesRepository _expensesRepository;
+        private readonly AccountRepository _accountRepository;
 
-        public ExpensesService(ExpensesRepository expensesRepository)
+        public AccountService(AccountRepository accountRepository)
         {
-            _expensesRepository = expensesRepository;
+            _accountRepository = accountRepository;
         }
 
-        public async Task<Expense> AddExpense(Expense expense)
+        public async Task<Account> AddAccount(Account account)
         {
             // Validate the expense object
-            var validationContext = new ValidationContext(expense, serviceProvider: null, items: null);
+            var validationContext = new ValidationContext(account, serviceProvider: null, items: null);
             var validationResults = new List<ValidationResult>();
-            bool isValid = Validator.TryValidateObject(expense, validationContext, validationResults, validateAllProperties: true);
+            bool isValid = Validator.TryValidateObject(account, validationContext, validationResults, validateAllProperties: true);
 
             if (!isValid)
             {
@@ -28,25 +28,24 @@ namespace MonthBudget.Services
                 string errorMessage = string.Join("; ", errorMessages);
                 throw new ValidationException(errorMessage);
             }
-            return await _expensesRepository.AddExpense(expense); ;
+            return await _accountRepository.AddAccount(account);
         }
 
-        public List<Expense> GetExpenses(int userId, DateTime? from = null, DateTime? to = null)
+
+        public List<Account> GetAccounts(int userId)
         {
             if (userId < 0)
                 throw new ValidationException($"incorrect userid {userId}");
 
-            return from == null || to == null ? _expensesRepository.GetAll(userId) :
-                                                _expensesRepository.GetInRange(userId,from.Value,to.Value);
+            return _accountRepository.GetAll(userId);
         }
 
-        public async Task<bool> RemoveExpense(int expenseId)
+        public async Task<bool> RemoveAccount(int accountId)
         {
-            if (expenseId < 0)
-                throw new ValidationException($"incorrect expenseId {expenseId}");
+            if (accountId < 0)
+                throw new ValidationException($"incorrect accountId {accountId}");
 
-            return await _expensesRepository.RemoveExpense(expenseId);
+            return await _accountRepository.RemoveAccount(accountId);
         }
-
     }
 }
