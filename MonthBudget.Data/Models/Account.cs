@@ -7,4 +7,6 @@ public partial class Account
     public int UserId { get; set; }
 
     public string AccountName { get; set; } = null!;
+
+    public bool? IsActive { get; set; }
 }

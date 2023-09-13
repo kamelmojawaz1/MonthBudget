@@ -38,6 +38,11 @@ public partial class MonthBudgetDbContext : DbContext
 
             entity.ToTable("accounts");
 
+            entity.Property(e => e.IsActive)
+                .IsRequired()
+                .HasDefaultValueSql("((1))")
+                .HasColumnName("isActive");
+
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.AccountName)
                 .HasMaxLength(100)
