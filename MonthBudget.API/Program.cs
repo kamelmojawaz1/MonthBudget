@@ -26,6 +26,8 @@ builder.Services.AddScoped<RecurringExpensesRepository>();
 builder.Services.AddScoped<IRecurringExpensesService,RecurringExpensesService>();
 builder.Services.AddScoped<RecurringIncomeRepository>();
 builder.Services.AddScoped<IRecurringIncomeService,RecurringIncomeService>();
+builder.Services.AddScoped<AccountRepository>();
+builder.Services.AddScoped<IAccountService, AccountService>();
 
 builder.Services.AddDbContext<MonthBudgetDbContext>(options =>
 {
