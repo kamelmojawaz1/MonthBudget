@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Runtime.CompilerServices;
 using MonthBudget.Data.Models;
 using MonthBudget.Data.Repositories;
 using MonthBudget.ServiceContracts;
@@ -54,13 +55,19 @@ namespace MonthBudget.Services
             return (recurringIncome, monthlyIncomes);
         }
 
-        public (List<RecurringIncome>, List<Income>) GetRecurringIncomes(int userId)
+        public (List<RecurringIncome>, List<Income>) GetRecurringIncomes(int userId, DateTime? from = null, DateTime? to = null)
         {
             if (userId < 0)
                 throw new ValidationException($"incorrect userid {userId}");
 
-            var recurringIncomes = _recurringIncomeRepository.GetAll(userId);
-            var monthlyIncomes = _incomeRepository.GetAll(userId).Where(i=>i.RecurringId > 0 && i.IsActive == true).ToList();
+            var recurringIncomes = from == null || to == null ? _recurringIncomeRepository.GetAll(userId) :
+                                                                    _recurringIncomeRepository.GetInRange(userId, (DateTime)from, (DateTime)to);
+
+            var monthlyIncomes = _incomeRepository.GetAll(userId).Where(i => i.RecurringId > 0 && 
+                                                          recurringIncomes.Any(ri=>ri.Id == i.RecurringId) && 
+                                                                                            i.IsActive == true && 
+                                                                                            i.TransactionDate>=from && 
+                                                                                            i.TransactionDate<to).ToList();
 
             return (recurringIncomes, monthlyIncomes);
         }

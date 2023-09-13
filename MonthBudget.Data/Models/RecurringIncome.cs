@@ -27,6 +27,7 @@ public partial class RecurringIncome
     [DefaultValue(1)]
     public int AccountId { get; set; }
 
+    [Required]
     public DateTime CreatedOn { get; set; }
 
     [Required]

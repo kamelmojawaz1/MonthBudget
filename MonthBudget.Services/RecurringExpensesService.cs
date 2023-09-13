@@ -64,7 +64,12 @@ namespace MonthBudget.Services
 
             var recurringExpenses = from == null || to == null ? _recurringExpensesRepository.GetAll(userId) :
                                                                     _recurringExpensesRepository.GetInRange(userId, (DateTime)from, (DateTime)to);
-            var monthlyExpenses = _expensesRepository.GetAll(userId).Where(i => i.RecurringId > 0 && i.IsActive == true).ToList();
+
+            var monthlyExpenses = _expensesRepository.GetAll(userId).Where(i => i.RecurringId > 0 &&
+                                              recurringExpenses.Any(ri => ri.Id == i.RecurringId) &&
+                                                                                i.IsActive == true &&
+                                                                                i.TransactionDate >= from &&
+                                                                                i.TransactionDate < to).ToList();
 
             return (recurringExpenses, monthlyExpenses);
         }
